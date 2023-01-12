@@ -1,0 +1,21 @@
+# Backup files
+*~
+
+# python cache
+__pycache__/
+
+# juypter internals
+.ipynb_checkpoints/
+
+# poetry lock
+poetry.lock
+
+# Temp notebook
+Untitled.ipynb
+*Scratch.ipynb
+
+# Temp directory
+tmp/
+
+# data files downloaded / generated
+data/*
