@@ -21,7 +21,8 @@ def create_tesseb_validate_catalog():
         right_on="tic_id",
         validate="many_to_one",
     )
-    df.drop("tic_id", axis=1)  # retain the tess_id column from TESS EB catalog
+    # drop  tic_id, retain the tess_id column from TESS EB catalog
+    df.drop("tic_id", axis=1, inplace=True)
 
     # additional logic done at load time to keep things flexible
 
