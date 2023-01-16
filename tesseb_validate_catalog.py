@@ -57,6 +57,9 @@ def load_tesseb_validate_catalog():
         dtype=nullable_cols_dtype,
     )
 
+    # a column for display purpose (to show TESS EB URL)
+    df["TESSEB_URL"] = df["tess_id"]
+
     _add_matching_meta(df)
     return df
 
