@@ -55,7 +55,7 @@ def style(df_catalog):
         return make_clickable(
             val,
             "https://exo.mast.stsci.edu/api/v0.1/Download/file?uri=",
-            "",
+            f"_{file_type}",
             link_text_func=lambda val: file_type,
         )
 
