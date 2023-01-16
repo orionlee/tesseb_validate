@@ -102,3 +102,8 @@ def _add_matching_meta(df):
         ]
         df[f"Diff_{tce}_epoch_phase"] = col_epoch_diff_phase
         df[f"Diff_{tce}_epoch_days"] = col_epoch_diff_phase * df["period"]
+
+
+if __name__ == "__main__":
+    print("Create TESS EB validation catalog (combining TESS EB and matching TCES)...")
+    create_tesseb_validate_catalog()

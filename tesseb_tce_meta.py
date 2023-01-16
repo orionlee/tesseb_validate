@@ -128,3 +128,11 @@ def load_tce_meta_table():
         dtype=nullable_cols_dtype,
     )
     return df
+
+
+if __name__ == "__main__":
+    print("Download matching TCEs to create the matching TCE table...")
+    load_tesseb_catalog()  # ensure the TESSEB catalog csv has been downloaded
+    get_n_save_tce_meta_of_tics(
+        # max_row=1000,
+    )
