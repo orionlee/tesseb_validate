@@ -67,7 +67,6 @@ def get_tce_meta(tic):
 def get_n_save_tce_meta_of_tics(tics=None, max_row=None):
     out_path = f"{TMP_DATA_DIR}/tic_tce_meta.csv"
 
-
     if tics is None:
         tics = load_tesseb_catalog()["tess_id"].to_numpy()
 
@@ -80,7 +79,6 @@ def get_n_save_tce_meta_of_tics(tics=None, max_row=None):
             return load_tce_meta_table()["tic_id"].to_numpy()
         else:
             return []
-
 
     # those that have been downloaded (and can be skipped)
     tics_saved = get_tics_saved()
@@ -104,5 +102,29 @@ def get_n_save_tce_meta_of_tics(tics=None, max_row=None):
 
 def load_tce_meta_table():
     file_path = f"{TMP_DATA_DIR}/tic_tce_meta.csv"
-    df = pd.read_csv(file_path)
+
+    #  columns that are inherently nullable ( a TIC may not have TCE(s))
+    nullable_col_suffixes = [
+        "obsID",
+        "sector_range_start",
+        "sector_range_stop",
+        "sector_range_span",
+        "tce_num",
+        "pipeline_run",
+        "planetNumber",
+    ]
+    nullable_cols = [f"TCE1_{c}" for c in nullable_col_suffixes]
+    nullable_cols += [f"TCE2_{c}" for c in nullable_col_suffixes]
+
+    # make the following nullable,
+    # so that when the TCE meta is joined with TESSEB and there is no match for a given TIC,
+    # the column does not become float
+    nullable_cols += ["num_tces", "tic_Id"]
+
+    nullable_cols_dtype = {c: "Int64" for c in nullable_cols}
+
+    df = pd.read_csv(
+        file_path,
+        dtype=nullable_cols_dtype,
+    )
     return df
