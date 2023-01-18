@@ -42,7 +42,7 @@ def style(df_catalog):
             "https://exo.mast.stsci.edu/exomast_planet.html?planet=",
             "_exomast",
             # shorten the link text to save space
-            link_text_func=lambda val: re.sub("^TIC\d+", "", val),
+            link_text_func=lambda val: re.sub(r"^TIC\d+", "", val),
         )
 
     def make_dv_file_link(val):

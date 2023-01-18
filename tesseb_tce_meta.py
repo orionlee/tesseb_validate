@@ -88,7 +88,8 @@ def get_n_save_tce_meta_of_tics(tics=None, max_row=None):
         if tic not in tics_saved:
             print(f"TIC {tic}")  # to show progress
             with warnings.catch_warnings():
-                # to filter UserWarning: get_tce_minimal_infos_of_tic(): Multiple DVS for s0011-s0011:TCE1. Discard pipeline_run 214.
+                # to filter UserWarning:
+                # get_tce_minimal_infos_of_tic(): Multiple DVS for s0011-s0011:TCE1. Discard pipeline_run 214.
                 warnings.filterwarnings(
                     "ignore", category=UserWarning, message=".*Multiple DVS for.*"
                 )
