@@ -64,6 +64,20 @@ def load_tesseb_validate_catalog():
     return df
 
 
+# TODO: Consider to relax match criteria to increase the yield of matching TCEs
+# - accept those with period diff (in days) is very small
+#    - the +/- 1% for epoch phase is too stringent for short period (EW type),
+#    - e.g., for a EW type with 0.3 day period, 1% would be 0.003 day, or 4.3 minutes
+# - if the difference in epoch phase is such that the TCE epoch still falls
+#    within an eclipse(maybe 50% of the duration), accept it as well, as the TCE epoch
+#    would still catch the change of brightness
+#    - basically, instead of using +/- 1%, we make the cutoff dependent of the
+#      width of the eclipse
+#    - for the width to be used, use the smaller of the (polynomial, 2-gaussian) values
+#      to be conservative.
+#
+
+
 def _is_period_ratio_match(ratio):
     if pd.isna(ratio):
         return "-"
