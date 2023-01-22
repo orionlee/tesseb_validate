@@ -1,3 +1,4 @@
+import datetime
 import os
 import warnings
 
@@ -6,6 +7,15 @@ import pandas as pd
 import tess_dv
 
 TMP_DATA_DIR = "data"
+
+TRACE = False
+
+
+def _trace(msg):
+    if not TRACE:
+        return
+    ts_str = datetime.datetime.now().strftime("%H:%M:%S")
+    print(f"TRACE [{ts_str}]:\t{msg}", flush=True)
 
 
 def load_tesseb_catalog():
@@ -41,12 +51,15 @@ def get_tce_meta(tic):
 
         return df
 
+    _trace("Query TCEs")
     tce_infos, dvr_xml_tab = tess_dv.get_tce_minimal_infos_of_tic(
         tic, also_return_dvr_xml_table=True
     )
     num_tces = len(tce_infos)
     tce_infos = tess_dv.filter_top_2_tces_for_eb(tce_infos)
+    _trace(f"Download TCE XMLs begin")
     tess_dv.add_info_from_tce_xml(tce_infos, dvr_xml_tab, download_dir=TMP_DATA_DIR)
+    _trace("Download TCE XMLs done")
 
     # convert the result to a DataFrame
     df = pd.DataFrame([dict(tic_id=tic, num_tces=num_tces)])
